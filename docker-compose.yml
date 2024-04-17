@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  movie-analyst-api:
+    build:
+      context: ./movie-analyst-api
+      dockerfile: Dockerfile
+
+    container_name: movie-analyst-api
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=dev
+      - DB_HOST=moviedb
+      - PORT=3000
+    depends_on:
+      - mysql
+    networks:
+      - backend
+
+  mysql:
+    image: mysql:8.3.0
+    container_name: moviedb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: movie_analyst_db
+      MYSQL_USER: db_user
+      MYSQL_PASSWORD: db_password
+    ports:
+      - "3306:3306"
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
