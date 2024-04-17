@@ -1,11 +1,8 @@
-version: '3.8'
-
 services:
   movie-analyst-api:
     build:
       context: ./movie-analyst-api
       dockerfile: Dockerfile
-
     container_name: movie-analyst-api
     ports:
       - "3000:3000"
@@ -15,6 +12,20 @@ services:
       - PORT=3000
     depends_on:
       - mysql
+    networks:
+      - backend
+
+  movie-analyst-ui:
+    build:
+      context: ./movie-analyst-ui
+      dockerfile: Dockerfile
+    container_name: movie-analyst-ui
+    ports:
+      - "3030:3030"
+    environment:
+      - PORT=3030
+    depends_on:
+      - movie-analyst-api
     networks:
       - backend
 
