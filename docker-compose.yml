@@ -9,11 +9,14 @@ services:
     environment:
       - NODE_ENV=dev
       - DB_HOST=moviedb
+      - DB_PASS=root_password
+      - DB_USER=root
       - PORT=3000
     depends_on:
       - mysql
     networks:
       - backend
+    restart: unless-stopped
 
   movie-analyst-ui:
     build:
@@ -24,13 +27,15 @@ services:
       - "3030:3030"
     environment:
       - PORT=3030
+      - BACKEND_URL="movie-analyst-api:3000"
     depends_on:
       - movie-analyst-api
     networks:
       - backend
+    restart: unless-stopped
 
   mysql:
-    image: mysql:8.3.0
+    image: mysql:5.7.44
     container_name: moviedb
     restart: always
     environment:
