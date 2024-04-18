@@ -25,6 +25,11 @@ app.get('/movies', function(req, res){
   request
     .get(`http://${backend_url}/movies`)
     .end(function(err, data) {
+      if(err){
+        // Handle the error like a proper human
+        console.error('Error fetching movie data:', err);
+        return res.status(500).send('Internal Server Error');
+      }
       if(data.status == 403){
         res.send(403, '403 Forbidden');
       } else {
@@ -41,6 +46,11 @@ app.get('/authors', function(req, res){
     .get(`http://${backend_url}/reviewers`)
     .set('Authorization', 'Bearer ' + req.access_token)
     .end(function(err, data) {
+      if(err){
+        // Handle the error like a proper human
+        console.error('Error fetching movie data:', err);
+        return res.status(500).send('Internal Server Error');
+      }
       if(data.status == 403){
         res.send(403, '403 Forbidden');
       } else {
@@ -54,6 +64,11 @@ app.get('/publications', function(req, res){
   request
     .get(`http://${backend_url}/publications`)
     .end(function(err, data) {
+      if(err){
+        // Handle the error like a proper human
+        console.error('Error fetching movie data:', err);
+        return res.status(500).send('Internal Server Error');
+      }
       if(data.status == 403){
         res.send(403, '403 Forbidden');
       } else {
