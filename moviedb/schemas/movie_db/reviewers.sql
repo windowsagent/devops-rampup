@@ -5,4 +5,4 @@ CREATE TABLE `reviewers` (
   PRIMARY KEY (`name`),
   KEY `publication` (`publication`),
   CONSTRAINT `reviewers_ibfk_1` FOREIGN KEY (`publication`) REFERENCES `publications` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

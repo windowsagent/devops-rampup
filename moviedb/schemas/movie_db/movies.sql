@@ -7,4 +7,4 @@ CREATE TABLE `movies` (
   PRIMARY KEY (`title`),
   KEY `reviewer` (`reviewer`),
   CONSTRAINT `movies_ibfk_1` FOREIGN KEY (`reviewer`) REFERENCES `reviewers` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
