@@ -1,0 +1,5 @@
+* Containerize application, and use kubernetes for easy scaling and less waste of resources
+* Use skeema to push schema changes to the DB, simplifying operations
+* Use the same RDS instance for two databases (prod and QA). That will simplify costs, and reduce risk of manipulating data on prod directly.
+* Consider using ARM
+* Use a kubernetes pod as a bastion, due to the ongoing economical situation of the client (as it will be cheaper than running a whole separate EC2 instance, and it can more easily be automated with IaC)
