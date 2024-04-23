@@ -13,3 +13,6 @@
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+
+# Ignore VSCode dir
+.vscode/*
