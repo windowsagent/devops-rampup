@@ -3,7 +3,7 @@
 
 ENV['VAGRANT_DEFAULT_PROVIDER'] = 'libvirt'
 VAGRANT_NODE_COUNT = 1
-VAGRANT_NODE_DISTR = "debian/buster64"
+VAGRANT_NODE_DISTR = "debian/bullseye64"
 
 Vagrant.configure("2") do |config|
 
