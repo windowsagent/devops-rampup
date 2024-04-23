@@ -6,9 +6,10 @@
     dest: /usr/local/bin/k3s-install.sh
     owner: root
     group: root
-    mode: 0755
+    mode: "0755"
 
 - name: Download K3s binary
   become: true
   ansible.builtin.command:
     cmd: /usr/local/bin/k3s-install.sh
+  changed_when: true
