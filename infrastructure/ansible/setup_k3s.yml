@@ -3,6 +3,13 @@
   roles:
    - role: k8s
 
+- name: Create pub keys folder
+  hosts: localhost
+  become: true
+  ansible.builtin.file:
+    path: /root/pubkeys
+    state: directory
+
 - name: Apply kubernetes manifests
   hosts: localhost
   tags: manifests
