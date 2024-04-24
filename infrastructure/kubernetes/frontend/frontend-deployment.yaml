@@ -22,9 +22,9 @@ spec:
               protocol: TCP
           env:
             - name: BACKEND_URL
-              value: movie-analyst-api:3000
+              value: "movie-analyst-api:3000"
             - name: PORT
-              value: 80
+              value: "80"
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
