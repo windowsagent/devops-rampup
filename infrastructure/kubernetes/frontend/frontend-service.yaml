@@ -6,7 +6,7 @@ metadata:
     name: movie-analyst-ui
 spec:
   ports:
-    - name: Website
+    - name: website
       protocol: TCP
       port: 80
       targetPort: 80
