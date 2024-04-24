@@ -7,6 +7,7 @@ metadata:
 spec:
   ports:
     - port: 80
+      name: web
   type: NodePort
   selector:
     app: movie-analyst-ui
