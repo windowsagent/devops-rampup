@@ -28,7 +28,7 @@ spec:
             - name: DB_PASS
               valueFrom:
                 secretKeyRef:
-                  name: rds_creds
+                  name: rds-creds
                   key: db_pass
             - name: DB_NAME
               value: movie_db
