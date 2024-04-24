@@ -25,5 +25,5 @@
         mode: '0600'
 
     - name: Create Kubernetes Secret
-      ansible.builtin.command: kubectl create secret generic rds_creds --from-literal=db_pass="{{ generated_password.stdout }}"
+      ansible.builtin.command: kubectl create secret generic rds-creds --from-literal=db_pass="{{ generated_password.stdout }}"
       changed_when: true
