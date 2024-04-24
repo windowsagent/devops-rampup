@@ -27,3 +27,17 @@ spec:
                 secretKeyRef:
                   name: sshkey
                   key: authorizedkeys
+          volumeMounts:
+            - name: k3s-config
+              mountPath: /etc/rancher/k3s/k3s.yaml
+            - name: public-keys
+              mountPath: /root/.ssh/
+      volumes:
+        - name: k3s-config
+          hostPath:
+            path: /etc/rancher/k3s/k3s.yaml
+            type: Directory
+        - name: public-keys
+          hostPath:
+            path: /root/pubkeys
+            type: Directory

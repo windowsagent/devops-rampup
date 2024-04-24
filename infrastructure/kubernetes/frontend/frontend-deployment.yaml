@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: movie-analyst-ui
+spec:
+  selector:
+    matchLabels:
+      app: movie-analyst-ui
+  replicas: 1
+  template:
+    metadata:
+      name: movie-analyst-ui
+      labels:
+        app: movie-analyst-ui
+    spec:
+      containers:
+        - name: movie-analyst-ui
+          image: windowsagent/movie-analyst-ui
+          ports:
+            - containerPort: 80
+              targetPort: 80
+              protocol: TCP
+          env:
+            - name: BACKEND_URL
+              value: "movie-analyst-api:3000"
+            - name: PORT
+              value: 80
+      autoscaler:
+        horizontalPodAutoscaler:
+          scaleTargetRef:
+            apiVersion: apps/v1
+            kind: Deployment
+            name: movie-analyst-ui
+          minReplicas: 1
+          maxReplicas: 10
+          targetCPUUtilizationPercentage: 80
+          targetMemoryUtilizationPercentage: 80

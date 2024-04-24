@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: movie-analyst-api
+spec:
+  selector:
+    matchLabels:
+      app: movie-analyst-api
+  replicas: 1
+  template:
+    metadata:
+      name: movie-analyst-api
+      labels:
+        app: movie-analyst-api
+    spec:
+      containers:
+        - name: movie-analyst-api
+          image: windowsagent/movie-analyst-api
+          ports:
+            - containerPort: 3000
+              targetPort: 3000
+              protocol: TCP
+          env:
+            - name: DB_HOST
+              value: localhost
+            - name: DB_USER
+              value: admin
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: rds_creds
+                  key: db_pass
+            - name: DB_NAME
+              value: movie_db
+      autoscaler:
+        horizontalPodAutoscaler:
+          scaleTargetRef:
+            apiVersion: apps/v1
+            kind: Deployment
+            name: movie-analyst-api
+          minReplicas: 1
+          maxReplicas: 10
+          targetCPUUtilizationPercentage: 80
+          targetMemoryUtilizationPercentage: 80
+
