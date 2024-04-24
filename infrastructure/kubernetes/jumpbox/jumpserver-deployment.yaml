@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sshd-jumpserver
+spec:
+  selector:
+    matchLabels:
+      app: sshd-jumpserver
+  replicas: 1
+  template:
+    metadata:
+      name: sshd-jumpserver
+      labels:
+        app: sshd-jumpserver
+    spec:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+        - name: sshd-jumpserver
+          image: windowsagent/epam-jumpbox
+          ports:
+            - containerPort: 22
+              protocol: TCP
+          env:
+            - name: PUBLIC_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: sshkey
+                  key: authorizedkeys
