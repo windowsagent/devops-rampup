@@ -17,8 +17,8 @@ resource "aws_db_instance" "movie_rds_instance" {
   vpc_security_group_ids     = [
     var.vpc_security_group_id
   ]
-  username	     = "admin"
-
+  username = "admin"
+  password = "tmp_pass"
   tags = {
     Name = "movie_rds_instance"
   }
