@@ -26,4 +26,5 @@ spec:
         backend:
           service:
             name: movie-analyst-ui
-            port: 80
+            port: 
+              number: 80
