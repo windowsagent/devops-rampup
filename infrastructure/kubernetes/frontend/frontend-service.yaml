@@ -24,5 +24,6 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: movie-analyst-ui
-          servicePort: 80
+          service:
+            name: movie-analyst-ui
+            port: 80
