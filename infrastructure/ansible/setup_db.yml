@@ -1,0 +1,29 @@
+- name: Configure RDS Credentials
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Install MariaDB Client
+      ansible.builtin.package:
+        name: mariadb-client
+        state: present
+
+    - name: Generate Random Password
+      ansible.builtin.command: echo "{{ lookup('password', '/dev/null length=20 chars=ascii_letters,digits') }}"
+      register: generated_password
+      changed_when: true
+
+    - name: Connect to RDS and Change Password
+      ansible.builtin.command: |
+        mysql -h "{{ RDS_ENDPOINT }}" -u admin -p"tmp_pass" -e "ALTER USER 'admin'@'%' IDENTIFIED BY '{{ generated_password.stdout }}';"
+      changed_when: true
+
+    - name: Store Password
+      ansible.builtin.copy:
+        content: "{{ generated_password.stdout }}"
+        dest: /root/db_pass
+        mode: '0600'
+
+    - name: Create Kubernetes Secret
+      ansible.builtin.command: kubectl create secret generic rds_creds --from-literal=db_pass="{{ generated_password.stdout }}"
+      changed_when: true

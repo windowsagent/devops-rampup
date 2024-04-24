@@ -2,3 +2,10 @@
   hosts: localhost
   roles:
    - role: k8s
+
+- name: Apply kubernetes manifests
+  hosts: localhost
+  tasks:
+   - name: Apply kubernetes manifests
+     ansible.builtin.command: kubectl apply -f "{{ item }}"
+     with_file_glob: ~/devops-rampup/infrastructure/kubernetes/
