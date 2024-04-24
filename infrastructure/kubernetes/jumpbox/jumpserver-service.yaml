@@ -8,6 +8,7 @@ spec:
   ports:
     - name: ssh
       port: 22
-  type: "LoadBalancer"
+      targetPort: 2200
+  type: "NodePort"
   selector:
     app: sshd-jumpserver
