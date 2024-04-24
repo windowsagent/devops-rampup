@@ -6,8 +6,10 @@
 - name: Apply kubernetes manifests
   hosts: localhost
   tags: manifests
-  tasks:
-   - name: Apply kubernetes manifests
-     ansible.builtin.command: kubectl apply -k "~/devops-rampup/infrastructure/kubernetes/"
-     become: true
-     changed_when: true
+  ansible.builtin.k8s:
+    state: present
+    definition: "{{ lookup('template', '{{ item }}') }}"
+    namespace: default
+  with_fileglob:
+    - "manifests/*.yaml"
+    - "manifests/*.j2"
