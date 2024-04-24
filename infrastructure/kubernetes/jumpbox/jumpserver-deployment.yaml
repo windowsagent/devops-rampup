@@ -29,13 +29,13 @@ spec:
                   key: authorizedkeys
           volumeMounts:
             - name: k3s-config
-              mountPath: /etc/rancher/k3s/k3s.yaml
+              mountPath: /etc/rancher/k3s
             - name: public-keys
               mountPath: /root/.ssh/
       volumes:
         - name: k3s-config
           hostPath:
-            path: /etc/rancher/k3s/k3s.yaml
+            path: /etc/rancher/k3s
             type: Directory
         - name: public-keys
           hostPath:
