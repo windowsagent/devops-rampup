@@ -8,8 +8,6 @@
   tags: manifests
   tasks:
    - name: Apply kubernetes manifests
-     ansible.builtin.command: kubectl apply -f "{{ item }}"
+     ansible.builtin.command: kubectl apply -k "~/devops-rampup/infrastructure/kubernetes/"
      become: true
-     with_fileglob:
-      - "~/devops-rampup/infrastructure/kubernetes/"
      changed_when: true
