@@ -27,3 +27,57 @@
     - name: Create Kubernetes Secret
       ansible.builtin.command: kubectl create secret generic rds-creds --from-literal=db_pass="{{ generated_password.stdout }}"
       changed_when: true
+
+    - name: Seed initial DB
+      block:
+        - name: Download skeema
+          become: true
+          ansible.builtin.get_url:
+            url: "https://github.com/skeema/skeema/releases/latest/download/skeema_amd64.deb"
+            timeout: 120
+            dest: /usr/local/skeema.deb
+            owner: root
+            group: root
+            mode: "0755"
+        - name: Install skeema
+          become: true
+          ansible.builtin.apt:
+            deb: /usr/local/skeema.deb
+
+        - name: Setup schema
+          become: true
+          ansible.builtin.command:
+            chdir: /root/devops-rampup/infrastructure/db_schemas/movie_db/
+            cmd: skeema push -h {{ RDS_ENDPOINT }} -u root -p {{ generated_password.stdout }} -d movie_db
+          changed_when: true
+
+        - name: Install deps for seeding DB
+          become: true
+          block:
+            - name: Add nodejs apt key
+              ansible.builtin.apt_key:
+                url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+                state: present
+            - name: Add nodejs PPA
+              ansible.builtin.apt_repository:
+                repo: deb https://deb.nodesource.com/node_20.x nodistro main
+                update_cache: true
+            - name: Install nodejs
+              ansible.builtin.apt:
+                update_cache: true
+                name: nodejs
+                state: present
+            - name: Install NPM dependencies
+              community.general.npm:
+                path: /root/devops-rampup/movie-analyst-api/
+
+        - name: Seed DB
+          become: true
+          ansible.builtin.command:
+            chdir: /root/devops-rampup/movie-analyst-api/
+            cmd: node seeds.js
+          changed_when: true
+          environment:
+            DB_HOST: "{{ RDS_ENDPOINT }}"
+            DB_USER: admin
+            DB_PASS: "{{ generated_password.stdout }}"
