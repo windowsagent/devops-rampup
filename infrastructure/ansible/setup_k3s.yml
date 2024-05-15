@@ -20,7 +20,7 @@
          state: present
 
       - name: Install kube config for ansible module
-        ansible.builtin.command: |
+        ansible.builtin.shell: |
          "k3s kubectl config view --flatten > /root/.kube/config"
         args:
          creates: /root/.kube/config
