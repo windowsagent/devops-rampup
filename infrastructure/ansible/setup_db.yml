@@ -7,7 +7,7 @@
       ansible.builtin.package:
         name: mariadb-client
         state: present
-    
+
     - name: Generate Random Password
       ansible.builtin.command: echo "{{ lookup('password', '/dev/null length=20 chars=ascii_letters,digits') }}"
       register: generated_password
@@ -25,7 +25,8 @@
         mode: '0600'
 
     - name: Create Kubernetes Secret
-      ansible.builtin.command: kubectl create secret generic rds-creds --from-literal=db_pass="{{ generated_password.stdout }}"
+      ansible.builtin.command: |
+        "kubectl create secret generic rds-creds --from-literal=db_pass='{{ generated_password.stdout }}'"
       changed_when: true
 
     - name: Create ConfigMap for RDS endpoint
