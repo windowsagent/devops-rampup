@@ -12,6 +12,8 @@ resource "aws_instance" "movie_kubernetes_instance" {
   tags = {
     Name = "kubernetes-instance"
   }
+
+  user_data = file("${path.module}/provision.sh")
 }
 
 output "instance_ip" {
