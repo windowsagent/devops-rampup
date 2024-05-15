@@ -23,7 +23,7 @@ spec:
           env:
             - name: DB_HOST
               valueFrom:
-                ConfigMapKeyRef:
+                configMapKeyRef:
                   name: rds-config
                   key: DB_HOST
             - name: DB_USER
