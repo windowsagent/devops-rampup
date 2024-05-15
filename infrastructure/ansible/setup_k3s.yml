@@ -11,7 +11,7 @@
       mode: '0755'
    - name: Apply kubernetes manifests
      tags: manifests
-     ansible.builtin.command:
-      cmd: "kubectl apply -R -f ."
+     ansible.builtin.command: "kubectl apply -R -f ."
+     args:
       chdir: "/root/devops-rampup/infrastructure/kubernetes/"
      changed_when: true
