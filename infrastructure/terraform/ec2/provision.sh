@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# Install Ansible
-sudo apt update && sudo apt install ansible git -y
+# Install Ansible, git and ec2-instance-connect
+sudo apt update && sudo apt install ansible git ec2-instance-connect -y
 
 # Clone repo
 sudo git clone "https://github.com/windowsagent/devops-rampup/" /root/devops-rampup/
