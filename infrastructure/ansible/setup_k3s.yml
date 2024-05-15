@@ -35,5 +35,6 @@
       - name: Apply manifests
         kubernetes.core.k8s:
          state: present
+         namespace: default
          src: "{{ item.path }}"
         loop: "{{ k8s_files.files }}"
