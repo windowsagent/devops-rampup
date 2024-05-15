@@ -2,22 +2,21 @@
   hosts: localhost
   roles:
    - role: k8s
-
-- name: Create pub keys folder
-  hosts: localhost
-  become: true
-  ansible.builtin.file:
-    path: /root/pubkeys
-    state: directory
-    mode: '0755'
-
-- name: Apply kubernetes manifests
-  hosts: localhost
-  tags: manifests
-  ansible.builtin.k8s:
-    state: present
-    definition: "{{ lookup('template', '{{ item }}') }}"
-    namespace: default
-  with_fileglob:
-    - "manifests/*.yaml"
-    - "manifests/*.j2"
+  tasks:
+  - name: Create pub keys folder
+    hosts: localhost
+    become: true
+    ansible.builtin.file:
+      path: /root/pubkeys
+      state: directory
+      mode: '0755'
+  - name: Apply kubernetes manifests
+    hosts: localhost
+    tags: manifests
+    ansible.builtin.k8s:
+      state: present
+      definition: "{{ lookup('template', '{{ item }}') }}"
+      namespace: default
+    with_fileglob:
+      - "manifests/*.yaml"
+      - "manifests/*.j2"
