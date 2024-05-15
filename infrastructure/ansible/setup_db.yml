@@ -73,8 +73,8 @@
         - name: Setup schema
           become: true
           ansible.builtin.command:
-            chdir: /root/devops-rampup/infrastructure/db_schemas/movie_db/
-            cmd: skeema push -h {{ RDS_ENDPOINT }} -u root -p {{ generated_password.stdout }} -d movie_db
+            chdir: /root/devops-rampup/infrastructure/db_schemas/
+            cmd: skeema push -u root -p{{ generated_password.stdout }}
           changed_when: true
 
         - name: Install deps for seeding DB
