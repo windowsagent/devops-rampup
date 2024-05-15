@@ -26,15 +26,21 @@
 
     - name: Create Kubernetes Secret
       become: true
-      ansible.builtin.command: |
-        "bash k3s kubectl create secret generic rds-creds --from-literal=db_pass='{{ generated_password.stdout }}'"
-      changed_when: true
+      kubernetes.core.k8s:
+        namespace: default
+        definition:
+          api_version: v1
+          kind: Secret
+          metadata:
+            name: rds-creds
+          data:
+            db_pass: "{{ generated_password.stdout | b64encode }}"
 
     - name: Create ConfigMap for RDS endpoint
       kubernetes.core.k8s:
         namespace: default
         definition:
-          api_version: 1
+          api_version: v1
           kind: ConfigMap
           metadata:
             name: rds-config
