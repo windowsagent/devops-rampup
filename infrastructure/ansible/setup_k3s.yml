@@ -9,18 +9,19 @@
       path: /root/pubkeys
       state: directory
       mode: '0755'
+
    - name: Apply kubernetes manifests
      tags: manifests
-     tasks:
+     block:
       - name: Find Kubernetes manifests
-        find:
+        ansible.builtin.find:
          paths: "/root/devops-rampup/infrastructure/kubernetes"
          patterns: "*.yaml"
-         recurse: yes
+         recurse: true
         register: k8s_files
 
       - name: Apply manifests
-        k8s:
+        kubernetes.core.k8s:
          state: present
          src: "{{ item.path }}"
         loop: "{{ k8s_files.files }}"
