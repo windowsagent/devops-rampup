@@ -21,7 +21,7 @@
 
       - name: Install kube config for ansible module
         ansible.builtin.command: |
-         "kubectl config view --flatten > /root/.kube/config"
+         "k3s kubectl config view --flatten > /root/.kube/config"
         args:
          creates: /root/.kube/config
 
