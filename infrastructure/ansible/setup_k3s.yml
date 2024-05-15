@@ -11,9 +11,16 @@
       mode: '0755'
    - name: Apply kubernetes manifests
      tags: manifests
-     kubernetes.core.k8s:
-      state: present
-      definition: "{{ lookup('template', '{{ item }}') }}"
-      namespace: default
-     with_fileglob:
-      - "/root/devops-rampup/infrastructure/kubernetes/**/*.yaml"
+     tasks:
+      - name: Find Kubernetes manifests
+        find:
+         paths: "/root/devops-rampup/infrastructure/kubernetes"
+         patterns: "*.yaml"
+         recurse: yes
+        register: k8s_files
+
+      - name: Apply manifests
+        k8s:
+         state: present
+         src: "{{ item.path }}"
+        loop: "{{ k8s_files.files }}"
