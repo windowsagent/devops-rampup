@@ -12,11 +12,18 @@
 
    - name: Apply kubernetes manifests
      tags: manifests
+     become: true
      block:
       - name: Install python kubernetes
         ansible.builtin.package:
          name: python3-kubernetes
          state: present
+
+      - name: Install kube config for ansible module
+        ansible.builtin.command: |
+         "kubectl config view --flatten > /root/.kube/config"
+        args:
+         creates: /root/.kube/config
 
       - name: Find Kubernetes manifests
         ansible.builtin.find:
