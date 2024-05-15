@@ -11,10 +11,7 @@
       mode: '0755'
    - name: Apply kubernetes manifests
      tags: manifests
-     kubernetes.core.k8s:
-      state: present
-      definition: "{{ lookup('template', '{{ item }}') }}"
-      namespace: default
-     with_fileglob:
-      - "/root/devops-rampup/infrastructure/kubernetes/*.yaml"
-      - "/root/devops-rampup/infrastructure/kubernetes/*.j2"
+     ansible.builtin.command:
+      cmd: "kubectl apply -R -f ."
+      chdir: "/root/devops-rampup/infrastructure/kubernetes/"
+     changed_when: true
