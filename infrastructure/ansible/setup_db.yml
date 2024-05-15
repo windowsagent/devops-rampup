@@ -7,7 +7,7 @@
       ansible.builtin.package:
         name: mariadb-client
         state: present
-
+    
     - name: Generate Random Password
       ansible.builtin.command: echo "{{ lookup('password', '/dev/null length=20 chars=ascii_letters,digits') }}"
       register: generated_password
@@ -15,7 +15,7 @@
 
     - name: Connect to RDS and Change Password
       ansible.builtin.command: |
-        mysql -h "{{ RDS_ENDPOINT }}" -u admin -p"tmp_pass" -e "ALTER USER 'admin'@'%' IDENTIFIED BY '{{ generated_password.stdout }}';"
+        mysql -h "{{ RDS_ENDPOINT.split(':')[0] }}" -u admin -p"tmp_pass" -e "ALTER USER 'admin'@'%' IDENTIFIED BY '{{ generated_password.stdout }}';"
       changed_when: true
 
     - name: Store Password
