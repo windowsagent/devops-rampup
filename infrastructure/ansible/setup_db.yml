@@ -28,6 +28,17 @@
       ansible.builtin.command: kubectl create secret generic rds-creds --from-literal=db_pass="{{ generated_password.stdout }}"
       changed_when: true
 
+    - name: Create ConfigMap for RDS endpoint
+      kubernetes.core.k8s:
+        namespace: default
+        definition:
+          api_version: 1
+          kind: ConfigMap
+          metadata:
+            name: rds-config
+          data:
+            DB_HOST: " {{ RDS_ENDPOINT }} "
+
     - name: Seed initial DB
       block:
         - name: Download skeema
