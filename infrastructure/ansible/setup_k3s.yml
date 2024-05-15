@@ -16,5 +16,5 @@
       definition: "{{ lookup('template', '{{ item }}') }}"
       namespace: default
      with_fileglob:
-      - "manifests/*.yaml"
-      - "manifests/*.j2"
+      - "/root/devops-rampup/infrastructure/kubernetes/manifests/*.yaml"
+      - "/root/devops-rampup/infrastructure/kubernetes/manifests/manifests/*.j2"
