@@ -19,6 +19,12 @@
          name: python3-kubernetes
          state: present
 
+      - name: Create kube config directory for root
+        ansible.builtin.file:
+         path: /root/.kube/
+         state: directory
+         mode: '0755'
+
       - name: Install kube config for ansible module
         ansible.builtin.copy:
          src: /etc/rancher/k3s/k3s.yaml
