@@ -6,6 +6,7 @@ resource "aws_instance" "movie_kubernetes_instance" {
   instance_type = "t3.micro"
   subnet_id     = var.public_subnet_id
   associate_public_ip_address = true
+  key_name = "knox-key"
 
   security_groups = [var.movie_sg_id]
 
