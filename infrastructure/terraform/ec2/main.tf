@@ -1,5 +1,5 @@
 variable "public_subnet_id" {}
-variable "movie_sg_name" {}
+variable "movie_sg_id" {}
 
 resource "aws_instance" "movie_kubernetes_instance" {
   ami           = "ami-058bd2d568351da34"
@@ -7,7 +7,7 @@ resource "aws_instance" "movie_kubernetes_instance" {
   subnet_id     = var.public_subnet_id
   associate_public_ip_address = true
 
-  security_groups = [var.movie_sg_name]
+  security_groups = [var.movie_sg_id]
 
   tags = {
     Name = "kubernetes-instance"
