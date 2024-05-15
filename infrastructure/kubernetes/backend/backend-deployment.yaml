@@ -22,7 +22,10 @@ spec:
               protocol: TCP
           env:
             - name: DB_HOST
-              value: localhost
+              valueFrom:
+                ConfigMapKeyRef:
+                  name: rds-config
+                  key: DB_HOST
             - name: DB_USER
               value: admin
             - name: DB_PASS
