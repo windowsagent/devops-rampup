@@ -29,6 +29,20 @@ resource "aws_subnet" "private_subnet" {
   }
 }
 
+resource "aws_subnet" "private_subnet2" {
+  vpc_id            = var.vpc_id
+  cidr_block        = "10.0.3.0/24"
+  availability_zone = "us-east-1b"
+
+  tags = {
+    Name = "private-subnet2"
+  }
+}
+
 output "private_subnet_id" {
   value = aws_subnet.private_subnet.id
+}
+
+output "private_subnet_id2" {
+  value = aws_subnet.private_subnet2.id
 }
