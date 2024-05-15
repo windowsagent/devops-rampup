@@ -13,6 +13,11 @@
    - name: Apply kubernetes manifests
      tags: manifests
      block:
+      - name: Install python kubernetes
+        ansible.builtin.package:
+         name: python3-kubernetes
+         state: present
+
       - name: Find Kubernetes manifests
         ansible.builtin.find:
          paths: "/root/devops-rampup/infrastructure/kubernetes"
