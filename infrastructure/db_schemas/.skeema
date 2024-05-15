@@ -2,6 +2,6 @@ generator=skeema:1.11.0-community
 
 [production]
 flavor=mysql:8.3
-host=172.17.0.5
+host=HOSTNAME
 port=3306
 user=root
