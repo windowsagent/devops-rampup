@@ -1,5 +1,6 @@
 variable "public_subnet_id" {}
 variable "movie_sg_id" {}
+variable "rds_endpoint" {}
 
 resource "aws_instance" "movie_kubernetes_instance" {
   ami           = "ami-058bd2d568351da34"
@@ -14,7 +15,10 @@ resource "aws_instance" "movie_kubernetes_instance" {
     Name = "kubernetes-instance"
   }
 
-  user_data = file("${path.module}/provision.sh")
+  user_data_base64 = base64encode("${templatefile("${path.module}/provision.sh", {
+    rds_endpoint   = var.rds_endpoint
+  })}")
+
 }
 
 output "instance_ip" {

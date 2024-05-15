@@ -32,3 +32,7 @@ output "subnet_group_name" {
 output "security_group_id" {
   value = var.vpc_security_group_id
 }
+
+output "rds_endpoint" {
+  value = aws_db_instance.movie_rds_instance.endpoint
+}

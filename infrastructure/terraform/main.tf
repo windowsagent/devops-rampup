@@ -23,6 +23,7 @@ module "ec2" {
   source = "./ec2"
   public_subnet_id = module.subnets.public_subnet_id
   movie_sg_id = module.vpc.public_sg_id
+  rds_endpoint = module.rds.rds_endpoint
 }
 
 module "rds" {
